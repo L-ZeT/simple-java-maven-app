@@ -10,6 +10,8 @@ pipeline {
                  }
             steps {
                 sh 'mvn -B -DskipTests clean package'
+                // List the contents of target to verify the JAR is built
+                sh 'ls -lh target'
             }
         }
         stage('Test') {
@@ -27,6 +29,9 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
+                 // Check if the JAR exists before running deliver.sh
+                sh '[ -f target/my-app-1.0-SNAPSHOT.jar ] && echo "JAR found!" || { echo "JAR missing!"; ls -lh target; exit 1; }'
+                
                 sh './jenkins/scripts/deliver.sh' 
             }
         }
