@@ -33,7 +33,7 @@ pipeline {
             }
             steps {
                  // Check if the JAR exists before running deliver.sh
-                sh '[ -f target/my-app-1.0-SNAPSHOT.jar ] && echo "JAR found!" || { echo "JAR missing!"; ls -lh target; exit 1; }'
+                sh 'JAR=$(ls target/*.jar | head -n 1) && [ -f "$JAR" ] && echo "JAR found: $JAR" || { echo "JAR missing!"; ls -lh target; exit 1; }'
                 
                 sh './jenkins/scripts/deliver.sh' 
             }
