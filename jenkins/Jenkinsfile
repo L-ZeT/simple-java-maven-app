@@ -28,6 +28,9 @@ pipeline {
             }
         }
         stage('Deliver') { 
+            tools {
+                jdk 'java'
+            }
             steps {
                  // Check if the JAR exists before running deliver.sh
                 sh '[ -f target/my-app-1.0-SNAPSHOT.jar ] && echo "JAR found!" || { echo "JAR missing!"; ls -lh target; exit 1; }'
