@@ -5,11 +5,17 @@ pipeline {
     }
     stages {
         stage('Build') {
+            tools {
+                        maven 'maven'
+                 }
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
+            tools {
+                        maven 'maven'
+                 }
             steps {
                 sh 'mvn test'
             }
